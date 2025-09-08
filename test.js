@@ -3,7 +3,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 const path = require('path');
 
-const BASE_URL = 'http://localhost:4005';
+const BASE_URL = 'http://localhost:4000';
 
 async function testBackend() {
   try {

@@ -2,11 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
-const nodemailer=require('nodemailer');
+const nodemailer = require("nodemailer");
 const { connectDB, sequelize } = require("./config/db");
 require("dotenv").config();
-const adminRoutes = require("./routes/authRoute");
+
+const adminRoutes = require("./routes/adminRoute");
 const candidateRoute = require("./routes/candidateRoute");
+const classifiedRoutes = require("./routes/classifiedRoute"); // <-- Added classified routes import
 
 const app = express();
 
@@ -23,8 +25,10 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files from uploads directory
 app.use("/uploads", express.static("uploads"));
 
+// API Routes
 app.use("/api/auth", adminRoutes);
 app.use("/api/candidates", candidateRoute);
+app.use("/api/classifieds", classifiedRoutes);  // <-- Register classified routes here
 
 // Health check endpoint
 app.get("/", (req, res) => {
@@ -35,7 +39,7 @@ app.get("/", (req, res) => {
   });
 });
 
-const PORT = 4005;
+const PORT = process.env.PORT || 4005;
 
 async function init() {
   try {
